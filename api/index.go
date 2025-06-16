@@ -64,8 +64,10 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	// Route based on the path.
 	switch r.URL.Path {
 	case "/login":
+		fmt.Println("Handling login request")
 		handleLogin(w, r)
 	case "/github/callback":
+		fmt.Println("Handling callback")
 		handleCallback(w, r)
 	default:
 		// Redirect any other path to the login endpoint.
@@ -76,6 +78,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 // handleLogin redirects the user to GitHub to authorize.
 func handleLogin(w http.ResponseWriter, r *http.Request) {
 	redirectURL := oauthConf.AuthCodeURL(oauthStateString, oauth2.AccessTypeOnline)
+	fmt.Println("Redirecting to:", redirectURL)
+	
 	http.Redirect(w, r, redirectURL, http.StatusTemporaryRedirect)
 }
 
